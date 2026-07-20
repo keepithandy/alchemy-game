@@ -4,7 +4,7 @@ A self-contained browser-game prototype centered on hidden ingredient properties
 
 ## Play
 
-1. Clone or download the repository.
+1. Extract the ZIP.
 2. Double-click `PLAY_GAME.bat` on Windows, or open `index.html` in a modern browser.
 3. Select ingredients from the shelf.
 4. Use at least two ingredients, tune the brewing process, and press **Begin Brewing**.
