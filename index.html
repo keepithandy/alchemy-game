@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b100e">
+  <meta name="description" content="A browser-based alchemy shop and potion discovery game.">
+  <title>The Apothecary Ledger</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script defer src="js/data/effects.js"></script>
+  <script defer src="js/data/ingredients.js"></script>
+  <script defer src="js/data/recipes.js"></script>
+  <script defer src="js/state.js"></script>
+  <script defer src="js/systems/brewing.js"></script>
+  <script defer src="js/systems/discovery.js"></script>
+  <script defer src="js/systems/customers.js"></script>
+  <script defer src="js/systems/progression.js"></script>
+  <script defer src="js/ui/inventory-ui.js"></script>
+  <script defer src="js/ui/brewing-ui.js"></script>
+  <script defer src="js/ui/ledger-ui.js"></script>
+  <script defer src="js/ui/shop-ui.js"></script>
+  <script defer src="js/app.js"></script>
+</head>
+<body>
+  <div class="ambient-layer" aria-hidden="true"></div>
+  <div class="game-shell">
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand__sigil" aria-hidden="true">⚗</span>
+        <div class="brand__copy">
+          <p class="eyebrow">Independent Apothecary</p>
+          <h1 class="brand__title">The Apothecary Ledger</h1>
+        </div>
+      </div>
+
+      <div class="status-bar" aria-label="Shop status">
+        <div class="status-item"><span>Day</span><strong data-day>1</strong></div>
+        <div class="status-item"><span>Gold</span><strong data-gold>120</strong></div>
+        <div class="status-item"><span>Reputation</span><strong data-reputation>Unknown</strong></div>
+        <div class="status-item"><span>Potions</span><strong data-potion-count>0</strong></div>
+      </div>
+
+      <div class="header-actions">
+        <button class="icon-button" type="button" aria-label="Forage for ingredients" title="Forage" data-forage>❧</button>
+        <button class="icon-button" type="button" aria-label="Open settings" title="Settings" data-open-settings>⚙</button>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <aside class="panel ingredient-panel" aria-labelledby="ingredients-title" data-view="ingredients">
+        <header class="panel__header">
+          <div><p class="eyebrow">Inventory</p><h2 id="ingredients-title">Ingredient Shelf</h2></div>
+          <span class="count-badge" data-ingredient-count>0</span>
+        </header>
+
+        <div class="toolbar">
+          <label class="search-field">
+            <span class="sr-only">Search ingredients</span>
+            <input type="search" placeholder="Search ingredients" data-ingredient-search>
+          </label>
+          <select class="select-control" aria-label="Filter ingredients" data-ingredient-filter>
+            <option value="all">All ingredients</option>
+            <option value="known">Has known effects</option>
+            <option value="unknown">Has hidden effects</option>
+            <option value="rare">Rare ingredients</option>
+          </select>
+        </div>
+
+        <div class="ingredient-list" data-ingredient-list></div>
+        <div class="panel-footer">
+          <button class="button button--secondary button--full" type="button" data-forage>
+            <span>Forage Nearby</span><small>Advances one day</small>
+          </button>
+        </div>
+      </aside>
+
+      <main class="brew-workspace" data-view="brewing">
+        <header class="screen-header">
+          <div>
+            <p class="eyebrow">Current Station</p>
+            <h2>Brewing Table</h2>
+            <p class="screen-header__description">Match hidden properties, tune the process, and record what survives the brew.</p>
+          </div>
+          <div class="screen-actions">
+            <button class="button button--secondary" type="button" data-clear-brew>Clear</button>
+            <button class="button button--primary" type="button" data-start-brew>Begin Brewing</button>
+          </div>
+        </header>
+
+        <section class="brew-stage" aria-labelledby="brew-stage-title">
+          <div class="section-heading">
+            <div><p class="eyebrow">Formula</p><h3 id="brew-stage-title">Ingredient Mixture</h3></div>
+            <span class="status-chip" data-mixture-status>Awaiting ingredients</span>
+          </div>
+
+          <div class="ingredient-slots" data-ingredient-slots>
+            <button class="ingredient-slot ingredient-slot--empty" type="button" data-slot="0">
+              <span class="ingredient-slot__number">01</span><span class="ingredient-slot__glyph">＋</span><strong>Add ingredient</strong><small>Required</small>
+            </button>
+            <button class="ingredient-slot ingredient-slot--empty" type="button" data-slot="1">
+              <span class="ingredient-slot__number">02</span><span class="ingredient-slot__glyph">＋</span><strong>Add ingredient</strong><small>Required</small>
+            </button>
+            <button class="ingredient-slot ingredient-slot--optional" type="button" data-slot="2">
+              <span class="ingredient-slot__number">03</span><span class="ingredient-slot__glyph">＋</span><strong>Optional catalyst</strong><small>Advanced mixtures</small>
+            </button>
+          </div>
+
+          <div class="apparatus">
+            <div class="apparatus__visual" aria-label="Alchemy cauldron visualization">
+              <div class="steam steam--one"></div><div class="steam steam--two"></div><div class="steam steam--three"></div>
+              <div class="apparatus__neck"></div>
+              <div class="apparatus__flask"><span class="liquid"></span><span class="bubble bubble--a"></span><span class="bubble bubble--b"></span><span class="bubble bubble--c"></span></div>
+              <div class="apparatus__stand"></div><div class="apparatus__burner"></div>
+            </div>
+            <div class="apparatus__status">
+              <p class="eyebrow">Apparatus Readout</p>
+              <div class="readout-row"><span>Mixture</span><strong data-readout-mixture>Empty</strong></div>
+              <div class="readout-row"><span>Estimated stability</span><strong data-readout-stability>—</strong></div>
+              <div class="readout-row"><span>Cauldron condition</span><strong>Stable</strong></div>
+              <div class="progress-track" role="progressbar" aria-label="Cauldron condition" aria-valuemin="0" aria-valuemax="100" aria-valuenow="88"><span style="--progress:88%"></span></div>
+              <p class="hint" data-process-hint>Select two ingredients to begin evaluating the mixture.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="process-panel" aria-labelledby="process-title">
+          <div class="section-heading">
+            <div><p class="eyebrow">Method</p><h3 id="process-title">Brewing Process</h3></div>
+            <span class="subtle-label">Process modifies potency and purity</span>
+          </div>
+
+          <div class="control-grid">
+            <label class="control-card">
+              <span class="control-card__header"><strong>Grinding</strong><output data-grind-output>Medium</output></span>
+              <input type="range" min="1" max="3" value="2" data-brew-control="grind">
+              <small>Controls extraction speed and ingredient damage.</small>
+            </label>
+            <label class="control-card">
+              <span class="control-card__header"><strong>Heat</strong><output data-heat-output>Warm</output></span>
+              <input type="range" min="1" max="5" value="3" data-brew-control="heat">
+              <small>Too much heat may create a volatile side effect.</small>
+            </label>
+            <label class="control-card">
+              <span class="control-card__header"><strong>Brewing Time</strong></span>
+              <select data-brew-control="duration">
+                <option value="short">Brief infusion</option><option value="standard" selected>Standard brew</option><option value="long">Extended reduction</option>
+              </select>
+              <small>Longer reduction increases potency and instability.</small>
+            </label>
+            <label class="control-card">
+              <span class="control-card__header"><strong>Base Liquid</strong></span>
+              <select data-brew-control="base">
+                <option value="water">Spring water</option><option value="oil">Herbal oil</option><option value="spirit">Distilled spirit</option>
+              </select>
+              <small>The base changes duration, sale value, and purity.</small>
+            </label>
+          </div>
+        </section>
+
+        <section class="result-panel result-panel--idle" aria-labelledby="result-title" aria-live="polite" data-brew-result>
+          <div class="result-panel__icon" aria-hidden="true">?</div>
+          <div class="result-panel__content">
+            <p class="eyebrow">Last Result</p><h3 id="result-title">No mixture brewed</h3>
+            <p>The completed potion, discovered effects, quality, and side effects will appear here.</p>
+          </div>
+        </section>
+      </main>
+
+      <aside class="panel ledger-panel" aria-labelledby="ledger-title" data-view="ledger">
+        <header class="panel__header">
+          <div><p class="eyebrow">Knowledge & Trade</p><h2 id="ledger-title">Apothecary Ledger</h2></div>
+          <span class="count-badge" data-discovery-count>0</span>
+        </header>
+
+        <div class="tab-list" role="tablist" aria-label="Ledger sections">
+          <button class="tab-button is-active" type="button" role="tab" aria-selected="true" data-ledger-tab="discoveries">Discoveries</button>
+          <button class="tab-button" type="button" role="tab" aria-selected="false" data-ledger-tab="orders">Orders</button>
+          <button class="tab-button" type="button" role="tab" aria-selected="false" data-ledger-tab="stock">Stock</button>
+          <button class="tab-button" type="button" role="tab" aria-selected="false" data-ledger-tab="shop">Upgrades</button>
+        </div>
+
+        <section class="ledger-section" data-ledger-view="discoveries"></section>
+        <section class="ledger-section" data-ledger-view="orders" hidden></section>
+        <section class="ledger-section" data-ledger-view="stock" hidden></section>
+        <section class="ledger-section" data-ledger-view="shop" hidden></section>
+      </aside>
+    </div>
+
+    <nav class="mobile-navigation" aria-label="Primary navigation">
+      <button class="mobile-navigation__item" type="button" data-mobile-view="ingredients"><span aria-hidden="true">❧</span><span>Ingredients</span></button>
+      <button class="mobile-navigation__item is-active" type="button" data-mobile-view="brewing"><span aria-hidden="true">⚗</span><span>Brew</span></button>
+      <button class="mobile-navigation__item" type="button" data-mobile-view="ledger"><span aria-hidden="true">▤</span><span>Ledger</span></button>
+      <button class="mobile-navigation__item" type="button" data-mobile-view="shop"><span aria-hidden="true">◇</span><span>Upgrades</span></button>
+    </nav>
+  </div>
+
+  <dialog class="game-dialog" data-settings-dialog>
+    <header class="game-dialog__header"><div><p class="eyebrow">Game Options</p><h2>Settings</h2></div><button class="icon-button" type="button" aria-label="Close settings" data-close-settings>×</button></header>
+    <div class="game-dialog__content">
+      <label class="setting-row"><span><strong>Reduced motion</strong><small>Minimize brewing and interface animations.</small></span><input type="checkbox" data-setting="reduced-motion"></label>
+      <div class="settings-divider"></div>
+      <button class="button button--danger button--full" type="button" data-reset-save>Reset all progress</button>
+      <p class="settings-note">Progress saves locally in this browser. No account or connection is required.</p>
+    </div>
+  </dialog>
+
+  <div class="toast-region" aria-live="polite" aria-atomic="true" data-toast-region></div>
+  <output class="smoke-output" data-smoke-output hidden></output>
+</body>
+</html>
