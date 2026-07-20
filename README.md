@@ -149,7 +149,7 @@ alchemy-game/
 ├─ index.html
 ├─ PLAY_GAME.bat
 ├─ README.md
-├─ VERSION.md
+├─ AGENT_VERSION.md
 ├─ css/
 │  ├─ tokens.css
 │  ├─ base.css
@@ -185,6 +185,7 @@ The prototype uses browser-global modules to remain directly runnable from `inde
 - `js/state.js` creates, normalizes, saves, loads, and resets game state.
 - `js/app.js` initializes the game and routes interface events.
 - `css/` separates design tokens, base rules, layout, components, and responsive behavior.
+- `AGENT_VERSION.md` is the canonical version and maintenance authority for coding agents.
 
 ## Project principles
 
