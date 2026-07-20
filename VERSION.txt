@@ -1,3 +1,0 @@
-The Apothecary Ledger
-Version 0.1.0 Prototype
-Build date: 2026-07-20
