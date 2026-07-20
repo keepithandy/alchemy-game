@@ -1,0 +1,10 @@
+*,*::before,*::after{box-sizing:border-box}
+html{min-width:320px;background:var(--color-bg);scrollbar-color:var(--color-border-strong) transparent}
+body{margin:0;min-height:100dvh;overflow-x:hidden;color:var(--color-text);background:var(--color-bg);font-family:var(--font-ui);line-height:1.5}
+button,input,select{color:inherit;font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.46}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
+h1,h2,h3,p{margin-top:0}h1,h2,h3{color:var(--color-text)}h1,h2{font-family:var(--font-display)}small{color:var(--color-text-muted)}
+[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.ambient-layer{position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 52% -12%,rgba(111,153,120,.17),transparent 42rem),linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);background-size:auto,36px 36px,36px 36px;mask-image:linear-gradient(to bottom,#000,transparent 86%)}
+.eyebrow{margin-bottom:var(--space-1);color:var(--color-text-muted);font-size:.69rem;font-weight:750;letter-spacing:.14em;text-transform:uppercase}
+.hint,.settings-note{margin:0;color:var(--color-text-muted);font-size:.84rem}.subtle-label{color:var(--color-text-muted);font-size:.78rem}
