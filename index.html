@@ -23,6 +23,7 @@
   <script defer src="js/ui/brewing-ui.js"></script>
   <script defer src="js/ui/ledger-ui.js"></script>
   <script defer src="js/ui/shop-ui.js"></script>
+  <script defer src="js/ui/onboarding-ui.js"></script>
   <script defer src="js/app.js"></script>
 </head>
 <body>
@@ -90,6 +91,20 @@
             <button class="button button--primary" type="button" data-start-brew>Begin Brewing</button>
           </div>
         </header>
+
+        <section class="onboarding-guide" aria-labelledby="first-brew-title" data-first-brew-guide>
+          <div class="onboarding-guide__copy">
+            <p class="eyebrow">First Brew Guide</p>
+            <h3 id="first-brew-title">Start with a reliable discovery</h3>
+            <p>Choose <strong>Silverleaf</strong> and <strong>Grave Moss</strong> from the Ingredient Shelf. They share Restoration, and the default grinding, heat, time, and spring-water settings are already enough for a dependable first brew.</p>
+            <ol class="onboarding-guide__steps">
+              <li>Select Silverleaf, then Grave Moss.</li>
+              <li>Leave the process controls at their default settings.</li>
+              <li>Choose <strong>Begin Brewing</strong> to bottle the potion and reveal your first notes.</li>
+            </ol>
+          </div>
+          <button class="button button--secondary onboarding-guide__dismiss" type="button" data-dismiss-first-brew-guide>Hide guide for this session</button>
+        </section>
 
         <section class="brew-stage" aria-labelledby="brew-stage-title">
           <div class="section-heading">
