@@ -177,6 +177,8 @@
     const failure = window.AlchemyBrewing.brew(failureState);
     check("incompatible mixture fails safely", failure.ok && !failure.success);
     check("failed mixture stores no potion", failureState.potions.length === 0);
+    check("failed mixture includes an explicit no-potion result", failure.message.includes("no potion was created"));
+    check("failed mixture records a named research property", failure.revealed.length === 1 && Boolean(window.AlchemyData.effects[failure.revealed[0].effectId]));
 
     const orderState = window.AlchemyState.createDefaultState();
     orderState.potions = [{ id:"test-potion", name:"Test", primaryEffectId:"focus", effectIds:["focus"], score:80, quality:"Potent", value:1 }];
