@@ -65,8 +65,14 @@
     }
     if (!result.success) {
       panel.classList.add("result-panel--failure");
-      const reveal = result.revealed?.length ? ` Experiment notes revealed ${window.AlchemyData.effects[result.revealed[0].effectId].name} in ${window.AlchemyData.ingredients.find((i) => i.id === result.revealed[0].ingredientId).name}.` : "";
-      panel.innerHTML = `<div class="result-panel__icon" aria-hidden="true">×</div><div class="result-panel__content"><p class="eyebrow">Failed Experiment</p><h3 id="result-title">${esc(result.title)}</h3><p>${esc(result.message + reveal)}</p></div>`;
+      const reveal = result.revealed?.length
+        ? result.revealed.map((entry) => {
+          const ingredient = window.AlchemyData.ingredients.find((item) => item.id === entry.ingredientId);
+          const effect = window.AlchemyData.effects[entry.effectId];
+          return `${ingredient ? ingredient.name : "An ingredient"} has the ${effect ? effect.name : "new"} property`;
+        }).join(". ") + "."
+        : "No new property was identified. Try a different pairing or review the known traits in the Ingredient Shelf.";
+      panel.innerHTML = `<div class="result-panel__icon" aria-hidden="true">×</div><div class="result-panel__content"><p class="eyebrow">Failed Experiment</p><h3 id="result-title">${esc(result.title)}</h3><p>${esc(result.message)}</p><p class="result-panel__research"><strong>Research note:</strong> ${esc(reveal)}</p></div>`;
       return;
     }
     panel.classList.add("result-panel--success");
