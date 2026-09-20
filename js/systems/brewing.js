@@ -82,7 +82,7 @@
         ok: true,
         success: false,
         title: "Collapsed Mixture",
-        message: "The ingredients produced no stable shared property. The residue was discarded.",
+        message: "No shared property held this mixture together, so no potion was created. The residue was discarded.",
         ingredientIds: ids,
         revealed,
         day: state.day
