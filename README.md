@@ -126,6 +126,8 @@ Clearing browser site data or using **Settings → Reset all progress** removes 
 
 > Saves are local to the browser and device used to play. There is no account or cloud synchronization in this prototype.
 
+Future save-transfer expectations are documented in [the export/import contract](docs/save-export-import-contract.md); no transfer control exists in this prototype.
+
 ## Built-in validation
 
 Open the game with the smoke query parameter:
@@ -225,3 +227,8 @@ Useful feedback includes:
 - ideas that strengthen the existing loop without replacing it.
 
 When reporting a problem, include the browser, device, actions taken, expected result, and actual result.
+
+## Maintainer review aids
+
+- [Manual mobile validation checklist](docs/mobile-validation-checklist.md)
+- [Customer-order and workshop progression review](docs/progression-review-checklist.md)
